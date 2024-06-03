@@ -4,16 +4,27 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 
-async function fetchSearchResults(query:any) {
+interface Post {
+  author: string;
+  published: string;
+  title: string;
+  slug: string;
+  tags: string[];
+  imgThumb?: string;
+  excerpt: string;
+}
+
+async function fetchSearchResults(query: string | null): Promise<Post[]> {
+  if (!query) return []; // Return empty array if query is null or empty
   const res = await fetch(
-    `https://www.googleapis.com/blogger/v3/blogs/4491005031879174222/posts/search?key=AIzaSyAc_bDpxwf2RKBQy2kSjeX7k8EH2LGVn3U&q=${query}`,
+    `https://www.googleapis.com/blogger/v3/blogs/4491005031879174222/posts/search?key=YOUR_API_KEY&q=${query}`,
   );
   if (!res.ok) {
     throw new Error("Failed to fetch posts");
   }
   const data = await res.json();
-  const processedPosts = data.items
-    ? data.items.map((item:any) => {
+  const processedPosts: Post[] = data.items
+    ? data.items.map((item: any) => {
         const imgThumb = item.content
           .match(/<img[^>]*>/g)?.[0]
           .match(/src="([^"]+)"/)?.[1];
@@ -35,7 +46,7 @@ async function fetchSearchResults(query:any) {
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const param = searchParams.get("q");
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
