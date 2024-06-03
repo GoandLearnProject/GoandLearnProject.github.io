@@ -13,7 +13,7 @@ async function fetchSearchResults(query:any) {
   }
   const data = await res.json();
   const processedPosts = data.items
-    ? data.items.map((item) => {
+    ? data.items.map((item:any) => {
         const imgThumb = item.content
           .match(/<img[^>]*>/g)?.[0]
           .match(/src="([^"]+)"/)?.[1];
