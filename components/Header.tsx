@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 let bodyTag = document.body;
-let themeColor = localStorage.getItem("webMode") ? localStoragegetItem("webMode") : "drK";
+let themeColor = localStorage.getItem("webMode") ? localStorage.getItem("webMode") : "drK";
 let gD1 = document.querySelectorAll("g.d1");
 let gD2 = document.querySelectorAll("g.d2");
 
