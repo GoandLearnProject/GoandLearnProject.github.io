@@ -1,13 +1,10 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { darkMode } from "../public/js/main";
 
 const darkClick = () => {
-  if (typeof window.darkMode === "function") {
-    window.darkMode();
-  } else {
-    console.error("darkMode function is not defined");
-  }
+  darkMode();
 };
 
 const Menu = () => {
