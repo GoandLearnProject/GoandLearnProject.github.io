@@ -4,12 +4,36 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const darkClick = async () => {
-  if (typeof window !== "undefined") {
-    const { darkMode } = await import("/js/main.js");
-    if (typeof darkMode === "function") {
-      darkMode();
-    }
+const darkMode = () => {
+  if (bodyTag.className.includes("drK")) {
+    gD2.forEach((elm) => {
+      elm.style.display = "none";
+    });
+    bodyTag.classList.remove("drK");
+    bodyTag.className += " lgT";
+    localStorage.setItem("webMode", "lgT");
+    gD1.forEach((elm) => {
+      elm.style = "";
+    });
+  } else {
+    gD1.forEach((elm) => {
+      elm.style.display = "none";
+    });
+    bodyTag.classList.remove("lgT");
+    bodyTag.className += " drK";
+    localStorage.setItem("webMode", "drK");
+    gD2.forEach((elm) => {
+      elm.style = "";
+    });
+  }
+}
+
+
+const darkClick = () => {
+  if (typeof window !== "undefined" && typeof window.darkMode === "function") {
+    window.darkMode();
+  } else {
+    console.error("darkMode function is not defined");
   }
 };
 

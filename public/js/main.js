@@ -13,26 +13,26 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-function darkMode() {
-  if (bodyTag.className.includes("drK")) {
-    gD2.forEach((elm) => {
-      elm.style.display = "none";
-    });
-    bodyTag.classList.remove("drK");
-    bodyTag.className += " lgT";
-    localStorage.setItem("webMode", "lgT");
-    gD1.forEach((elm) => {
-      elm.style = "";
-    });
-  } else {
-    gD1.forEach((elm) => {
-      elm.style.display = "none";
-    });
-    bodyTag.classList.remove("lgT");
-    bodyTag.className += " drK";
-    localStorage.setItem("webMode", "drK");
-    gD2.forEach((elm) => {
-      elm.style = "";
-    });
-  }
-}
+// function darkMode() {
+//   if (bodyTag.className.includes("drK")) {
+//     gD2.forEach((elm) => {
+//       elm.style.display = "none";
+//     });
+//     bodyTag.classList.remove("drK");
+//     bodyTag.className += " lgT";
+//     localStorage.setItem("webMode", "lgT");
+//     gD1.forEach((elm) => {
+//       elm.style = "";
+//     });
+//   } else {
+//     gD1.forEach((elm) => {
+//       elm.style.display = "none";
+//     });
+//     bodyTag.classList.remove("lgT");
+//     bodyTag.className += " drK";
+//     localStorage.setItem("webMode", "drK");
+//     gD2.forEach((elm) => {
+//       elm.style = "";
+//     });
+//   }
+// }
