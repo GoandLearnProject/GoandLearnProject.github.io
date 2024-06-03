@@ -2,6 +2,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 async function getPosts({ date }: { date?: string }) {
   const res = await fetch(
@@ -63,10 +64,12 @@ export default function HomePage() {
       <div className="blogPts" ref={postListRef}>
         {posts.map((post) => (
           <>
-            <article className="ntry">
+            <article key={post.slug} className="ntry">
               <div className="pThmb">
                 <Link className="thmb" href={`/${post.slug}`}>
-                  <img
+                  <Image
+                    width={300}
+                    height={600}
                     className="imgThm"
                     src={post.imgThumb}
                     alt={post.title}
@@ -78,6 +81,7 @@ export default function HomePage() {
                   <div className="pLbls" data-text="in">
                     {post.tags.slice(0, 2).map((tag, index) => (
                       <Link
+                        key={tag}
                         aria-label={tag}
                         data-text={tag}
                         href={`/tag/${tag}`}

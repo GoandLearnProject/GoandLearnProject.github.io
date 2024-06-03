@@ -1,10 +1,12 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-async function getSearch({ qwerty }: { qwerty?: string }) {
+import Image from "next/image";
+
+async function fetchSearchResults(query) {
   const res = await fetch(
-    `https://www.googleapis.com/blogger/v3/blogs/4491005031879174222/posts/search?key=AIzaSyAc_bDpxwf2RKBQy2kSjeX7k8EH2LGVn3U&q=${qwerty}`,
+    `https://www.googleapis.com/blogger/v3/blogs/4491005031879174222/posts/search?key=AIzaSyAc_bDpxwf2RKBQy2kSjeX7k8EH2LGVn3U&q=${query}`,
   );
   if (!res.ok) {
     throw new Error("Failed to fetch posts");
@@ -29,10 +31,34 @@ async function getSearch({ qwerty }: { qwerty?: string }) {
     : [];
   return processedPosts;
 }
-export default async function SearchPage() {
+
+export default function SearchPage() {
   const searchParams = useSearchParams();
   const param = searchParams.get("q");
-  const posts = await getSearch({ qwerty: param });
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await fetchSearchResults(param);
+        setPosts(result);
+      } catch (error) {
+        console.error("Failed to fetch posts", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (param) {
+      fetchData();
+    }
+  }, [param]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <div className="blogPts">
@@ -40,7 +66,13 @@ export default async function SearchPage() {
           <article className="ntry" key={post.slug}>
             <div className="pThmb">
               <Link className="thmb" href={`/${post.slug}`}>
-                <img className="imgThm" src={post.imgThumb} alt={post.title} />
+                <Image
+                  width={300}
+                  height={600}
+                  className="imgThm"
+                  src={post.imgThumb}
+                  alt={post.title}
+                />
               </Link>
             </div>
             <div className="pCntn">
