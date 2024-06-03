@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-async function getPosts({ tag, date }) {
+async function getPosts({ tag, date }: { tag: string, date?: string }) {
   const res = await fetch(
     `https://www.googleapis.com/blogger/v3/blogs/4491005031879174222/posts/search?key=AIzaSyAc_bDpxwf2RKBQy2kSjeX7k8EH2LGVn3U&maxResults=8&labels=${tag}${date ? `&endDate=${date}` : ""}`,
   );
@@ -67,7 +67,7 @@ export default function TagListPage({ params: { tag } }) {
                     width={300}
                     height={600}
                     className="imgThm"
-                    src={post.imgThumb}
+                    src={post.imgThumb ?? "../favicon.ico"}
                     alt={post.title}
                   />
                 </Link>
