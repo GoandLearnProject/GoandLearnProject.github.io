@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 let bodyTag = document.body;
-let themeColor = localStorage.getItem("webMode");
+let themeColor = localStorage.getItem("webMode") ? localStorage : "drK";
 let gD1 = document.querySelectorAll("g.d1");
 let gD2 = document.querySelectorAll("g.d2");
 
@@ -41,8 +41,7 @@ const darkMode = () => {
       elm.style = "";
     });
   }
-}
-
+};
 
 const darkClick = () => {
   if (typeof window !== "undefined" && typeof window.darkMode === "function") {
