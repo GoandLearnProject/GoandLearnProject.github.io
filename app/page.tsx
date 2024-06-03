@@ -47,13 +47,14 @@ export default function HomePage() {
   };
 
   const loadMorePosts = async () => {
+    if (isLoading || !hasMore) return;
     setIsLoading(true);
-    const lastPost = posts.length > 0 ? posts[posts.length - 1] : null;
-    const newPosts = lastPost
-      ? await getPosts({ date: lastPost.published })
-      : await getPosts({});
-    setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-    setHasMore(newPosts.length === 8);
+    const lastPost = posts[posts.length - 1];
+    if (lastPost && lastPost.published) { // Kiểm tra lastPost và published
+      const newPosts = await getPosts({ date: lastPost.published });
+      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      setHasMore(newPosts.length === 8);
+    }
     setIsLoading(false);
   };
 
