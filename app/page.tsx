@@ -49,7 +49,7 @@ export default function HomePage() {
   const loadMorePosts = async () => {
     setIsLoading(true);
     const lastPost = posts.length > 0 ? posts[posts.length - 1] : null;
-    let newPosts;
+    let newPosts: any;
 
     if (lastPost) {
       newPosts = await getPosts({ date: lastPost.published, tag });
