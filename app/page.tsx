@@ -81,7 +81,7 @@ export default function HomePage() {
                     width={300}
                     height={600}
                     className="imgThm"
-                    src={post.imgThumb}
+                    src={post?.imgThumb}
                     alt={post.title}
                   />
                 </Link>
