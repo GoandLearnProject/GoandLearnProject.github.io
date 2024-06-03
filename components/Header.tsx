@@ -3,53 +3,11 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-
-let bodyTag = document.body;
-let themeColor = localStorage.getItem("webMode") ? (1===1) : "drK";
-let gD1 = document.querySelectorAll("g.d1");
-let gD2 = document.querySelectorAll("g.d2");
-
-document.addEventListener("DOMContentLoaded", function () {
-  if (!bodyTag.className.includes(themeColor)) {
-    bodyTag.classList.remove("drK");
-    bodyTag.className += " lgT";
-    gD2.forEach((elm) => {
-      elm.style.display = "";
-    });
-  }
-});
+import { darkMode } from "js/main";
 
 const darkClick = () => {
-  if (bodyTag.className.includes("drK")) {
-    gD2.forEach((elm) => {
-      elm.style.display = "none";
-    });
-    bodyTag.classList.remove("drK");
-    bodyTag.className += " lgT";
-    localStorage.setItem("webMode", "lgT");
-    gD1.forEach((elm) => {
-      elm.style = "";
-    });
-  } else {
-    gD1.forEach((elm) => {
-      elm.style.display = "none";
-    });
-    bodyTag.classList.remove("lgT");
-    bodyTag.className += " drK";
-    localStorage.setItem("webMode", "drK");
-    gD2.forEach((elm) => {
-      elm.style = "";
-    });
-  }
+  darkMode();
 };
-
-// const darkClick = () => {
-//   if (typeof window !== "undefined" && typeof window.darkMode === "function") {
-//     window.darkMode();
-//   } else {
-//     console.error("darkMode function is not defined");
-//   }
-// };
 
 const Header = () => {
   return (
