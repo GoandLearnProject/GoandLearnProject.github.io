@@ -4,11 +4,14 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const darkClick = () => {
-  if (typeof (window as any).darkMode === "function") {
-    (window as any).darkMode();
+const darkClick = async () => {
+  if (typeof window !== "undefined") {
+    const { darkMode } = await import("/public/js/main.js");
+    if (typeof darkMode === "function") {
+      darkMode();
+    }
   }
-}
+};
 
 const Header = () => {
   return (
@@ -40,7 +43,12 @@ const Header = () => {
           <div className="headN section" id="header-title">
             <div className="widget Header" id="Header1">
               <Link href="/">
-                <Image height={58} src="/logo.svg" width={255} alt="Go and Learn" />
+                <Image
+                  height={58}
+                  src="/logo.svg"
+                  width={255}
+                  alt="Go and Learn"
+                />
               </Link>
               <div className="headInnr hidden">
                 <h1 className="headH notranslate">
