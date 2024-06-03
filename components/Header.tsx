@@ -5,12 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 const darkClick = () => {
-  if (typeof window.darkMode === "function") {
-    window.darkMode();
-  } else {
-    console.error("darkMode function is not defined");
+  if (typeof (window as any).darkMode === "function") {
+    (window as any).darkMode();
   }
-};
+}
 
 const Header = () => {
   return (
