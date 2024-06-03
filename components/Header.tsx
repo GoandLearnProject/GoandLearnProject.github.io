@@ -4,6 +4,21 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+let bodyTag = document.body;
+let themeColor = localStorage.getItem("webMode");
+let gD1 = document.querySelectorAll("g.d1");
+let gD2 = document.querySelectorAll("g.d2");
+
+document.addEventListener("DOMContentLoaded", function () {
+  if (!bodyTag.className.includes(themeColor)) {
+    bodyTag.classList.remove("drK");
+    bodyTag.className += " lgT";
+    gD2.forEach((elm) => {
+      elm.style.display = "";
+    });
+  }
+});
+
 const darkMode = () => {
   if (bodyTag.className.includes("drK")) {
     gD2.forEach((elm) => {

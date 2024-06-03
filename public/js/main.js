@@ -1,17 +1,17 @@
-let bodyTag = document.body;
-let themeColor = localStorage.getItem("webMode");
-let gD1 = document.querySelectorAll("g.d1");
-let gD2 = document.querySelectorAll("g.d2");
+// let bodyTag = document.body;
+// let themeColor = localStorage.getItem("webMode");
+// let gD1 = document.querySelectorAll("g.d1");
+// let gD2 = document.querySelectorAll("g.d2");
 
-document.addEventListener("DOMContentLoaded", function () {
-  if (!bodyTag.className.includes(themeColor)) {
-    bodyTag.classList.remove("drK");
-    bodyTag.className += " lgT";
-    gD2.forEach((elm) => {
-      elm.style.display = "";
-    });
-  }
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//   if (!bodyTag.className.includes(themeColor)) {
+//     bodyTag.classList.remove("drK");
+//     bodyTag.className += " lgT";
+//     gD2.forEach((elm) => {
+//       elm.style.display = "";
+//     });
+//   }
+// });
 
 // function darkMode() {
 //   if (bodyTag.className.includes("drK")) {
