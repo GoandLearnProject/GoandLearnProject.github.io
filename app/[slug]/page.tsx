@@ -35,7 +35,7 @@ export default async function PostDetailPage({
           </div>
         </div>
         <div className="lbHt">
-          {firstItem.labels.slice(0, 2).map((tag, index) => (
+          {firstItem.labels.slice(0, 2).map((tag: string, index: number) => (
             <Link key={index} href={`tag/${tag}`}>
               #{tag}
             </Link>
