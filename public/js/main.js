@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-function darkMode() {
+export const darkMode = () => {
   if (bodyTag.className.includes("drK")) {
     gD2.forEach((elm) => {
       elm.style.display = "none";
