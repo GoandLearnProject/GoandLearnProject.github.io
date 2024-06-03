@@ -17,7 +17,7 @@ interface Post {
 async function fetchSearchResults(query: string | null): Promise<Post[]> {
   if (!query) return []; // Return empty array if query is null or empty
   const res = await fetch(
-    `https://www.googleapis.com/blogger/v3/blogs/4491005031879174222/posts/search?key=YOUR_API_KEY&q=${query}`,
+    `https://www.googleapis.com/blogger/v3/blogs/4491005031879174222/posts/search?key=AIzaSyAc_bDpxwf2RKBQy2kSjeX7k8EH2LGVn3U&q=${query}`,
   );
   if (!res.ok) {
     throw new Error("Failed to fetch posts");

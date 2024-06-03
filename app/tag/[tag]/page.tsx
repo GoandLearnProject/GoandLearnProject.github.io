@@ -3,16 +3,32 @@ import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-async function getPosts({ tag, date }: { tag: string, date?: string }) {
+interface Post {
+  author: string;
+  published: string;
+  title: string;
+  slug: string;
+  tags: string[];
+  imgThumb?: string;
+  excerpt: string;
+}
+
+async function getPosts({
+  tag,
+  date,
+}: {
+  tag: string;
+  date?: string;
+}): Promise<Post[]> {
   const res = await fetch(
     `https://www.googleapis.com/blogger/v3/blogs/4491005031879174222/posts/search?key=AIzaSyAc_bDpxwf2RKBQy2kSjeX7k8EH2LGVn3U&maxResults=8&labels=${tag}${date ? `&endDate=${date}` : ""}`,
   );
   if (!res.ok) {
-    throw new Error("Fail to fetch data");
+    throw new Error("Failed to fetch posts");
   }
   const data = await res.json();
-  const processedPosts = data.items
-    ? data.items.map((item:any) => {
+  const processedPosts: Post[] = data.items
+    ? data.items.map((item: any) => {
         const imgThumb = item.content
           .match(/<img[^>]*>/g)?.[0]
           .match(/src="([^"]+)"/)?.[1];
@@ -31,30 +47,44 @@ async function getPosts({ tag, date }: { tag: string, date?: string }) {
   return processedPosts;
 }
 
-export default function TagListPage({ params: { tag } }: { params: { tag: string } }) {
-  const [posts, setPosts] = useState([]);
+export default function TagListPage({
+  params: { tag },
+}: {
+  params: { tag: string };
+}) {
+  const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const postListRef = useRef(null);
+  const postListRef = useRef<HTMLDivElement>(null);
 
   const fetchInitialPosts = async () => {
-    const initialPosts = await getPosts({ tag });
-    setPosts(initialPosts);
-    setHasMore(initialPosts.length === 8);
+    try {
+      const initialPosts = await getPosts({ tag });
+      setPosts(initialPosts);
+      setHasMore(initialPosts.length === 8);
+    } catch (error) {
+      console.error("Failed to fetch initial posts", error);
+    }
   };
 
   const loadMorePosts = async () => {
     setIsLoading(true);
     const lastPost = posts[posts.length - 1];
-    const newPosts = await getPosts({ date: lastPost.published, tag });
-    setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-    setHasMore(newPosts.length === 8);
-    setIsLoading(false);
+    try {
+      const newPosts = await getPosts({ date: lastPost.published, tag });
+      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      setHasMore(newPosts.length === 8);
+    } catch (error) {
+      console.error("Failed to fetch more posts", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchInitialPosts();
-  }, [fetchInitialPosts, tag]);
+  }, [tag]);
+
   return (
     <>
       <div className="blogPts" ref={postListRef}>
