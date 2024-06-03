@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const darkClick = async () => {
   if (typeof window !== "undefined") {
-    const { darkMode } = await import("/public/js/main.js");
+    const { darkMode } = await import("/js/main.js");
     if (typeof darkMode === "function") {
       darkMode();
     }
