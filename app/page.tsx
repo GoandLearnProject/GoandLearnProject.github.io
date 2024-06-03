@@ -49,9 +49,10 @@ export default function HomePage() {
   const loadMorePosts = async () => {
     setIsLoading(true);
     const lastPost = posts.length > 0 ? posts[posts.length - 1] : null;
-    const newPosts = lastPost
-      ? await getPosts({ date: lastPost.published })
-      : await getPosts({});
+    const newPosts = await getPosts({
+      date: lastPost?.published,
+      tag,
+    });
     setPosts((prevPosts) => [...prevPosts, ...newPosts]);
     setHasMore(newPosts.length === 8);
     setIsLoading(false);
