@@ -1,8 +1,25 @@
+// app/[slug]/page.tsx
 import Link from "next/link";
 
-async function getPost(slug: string) {
+interface Post {
+  id: string;
+  title: string;
+  content: string;
+  author: {
+    displayName: string;
+    url: string;
+    image: {
+      url: string;
+    };
+  };
+  updated: string;
+  labels: string[];
+}
+
+async function getPost(slug: string): Promise<{ items: Post[] }> {
   const res = await fetch(
     `https://www.googleapis.com/blogger/v3/blogs/4491005031879174222/posts/search?key=AIzaSyAc_bDpxwf2RKBQy2kSjeX7k8EH2LGVn3U&q=${slug}`,
+    { next: { revalidate: 60 } }, // Revalidate every 60 seconds
   );
   if (!res.ok) {
     throw new Error("Fail to fetch data");
@@ -11,13 +28,12 @@ async function getPost(slug: string) {
 }
 
 export default async function PostDetailPage({
-  params: { slug },
+  params,
 }: {
   params: { slug: string };
 }) {
-  const post = await getPost(slug);
-  const firstItem = post.items?.[0]; // Kiểm tra tồn tại và lấy phần tử đầu tiên
-
+  const { items } = await getPost(params.slug);
+  const firstItem = items?.[0]; // Kiểm tra tồn tại và lấy phần tử đầu tiên
   if (!firstItem) {
     // Trường hợp không có items
     return <div>No post found.</div>;
@@ -36,7 +52,7 @@ export default async function PostDetailPage({
         </div>
         <div className="lbHt">
           {firstItem.labels.slice(0, 2).map((tag: string, index: number) => (
-            <Link key={index} href={`tag/${tag}`}>
+            <Link key={index} href={`/tag/${tag}`}>
               #{tag}
             </Link>
           ))}
