@@ -31,7 +31,7 @@ async function getPosts({ tag, date }: { tag: string, date?: string }) {
   return processedPosts;
 }
 
-export default function TagListPage({ params: { tag } }) {
+export default function TagListPage({ params: { tag } }: { params: { tag: string } }) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
