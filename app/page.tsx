@@ -1,10 +1,20 @@
 // /app/page.tsx
 "use client";
-import React, { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import React, { useRef, useState, useEffect } from "react";
 
-async function getPosts({ date }: { date?: string }) {
+interface Post {
+  author: string;
+  published: string;
+  title: string;
+  slug: string;
+  tags: string[];
+  imgThumb?: string;
+  excerpt: string;
+}
+
+async function getPosts({ date }: { date?: string }): Promise<Post[]> {
   const res = await fetch(
     `https://www.googleapis.com/blogger/v3/blogs/4491005031879174222/posts?key=AIzaSyAc_bDpxwf2RKBQy2kSjeX7k8EH2LGVn3U&maxResults=8${
       date ? `&endDate=${date}` : ""
@@ -14,7 +24,7 @@ async function getPosts({ date }: { date?: string }) {
     throw new Error("Failed to fetch posts");
   }
   const data = await res.json();
-  const processedPosts = data.items
+  const processedPosts: Post[] = data.items
     ? data.items.map((item: any) => {
         const imgThumb = item.content
           .match(/<img[^>]*>/g)?.[0]
@@ -35,10 +45,10 @@ async function getPosts({ date }: { date?: string }) {
 }
 
 export default function HomePage() {
-  const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const postListRef = useRef(null);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const postListRef = useRef<HTMLDivElement>(null);
 
   const fetchInitialPosts = async () => {
     const initialPosts = await getPosts({});
@@ -47,18 +57,15 @@ export default function HomePage() {
   };
 
   const loadMorePosts = async () => {
-    if (isLoading || !hasMore) return;
     setIsLoading(true);
     const lastPost = posts[posts.length - 1];
-    if (lastPost && lastPost.published) { // Kiểm tra lastPost và published
-      const newPosts = await getPosts({ date: lastPost.published });
-      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-      setHasMore(newPosts.length === 8);
-    }
+    const newPosts = await getPosts({ date: lastPost.published });
+    setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+    setHasMore(newPosts.length === 8);
     setIsLoading(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchInitialPosts();
   }, []);
 
