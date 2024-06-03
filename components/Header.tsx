@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const darkClick = () => {
   if (typeof window.darkMode === "function") {
@@ -41,7 +42,7 @@ const Header = () => {
           <div className="headN section" id="header-title">
             <div className="widget Header" id="Header1">
               <Link href="/">
-                <img height="58" src="/logo.svg" width="255" />
+                <Image height={58} src="/logo.svg" width={255} />
               </Link>
               <div className="headInnr hidden">
                 <h1 className="headH notranslate">

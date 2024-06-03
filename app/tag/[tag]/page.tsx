@@ -54,7 +54,7 @@ export default function TagListPage({ params: { tag } }) {
 
   useEffect(() => {
     fetchInitialPosts();
-  }, [tag]);
+  }, [fetchInitialPosts, tag]);
   return (
     <>
       <div className="blogPts" ref={postListRef}>
