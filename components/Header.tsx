@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 let bodyTag = document.body;
-let themeColor = localStorage.getItem("webMode") ? localStorage.getItem("webMode") : "drK";
+let themeColor = localStorage.getItem("webMode") ? (1===1) ? "drK";
 let gD1 = document.querySelectorAll("g.d1");
 let gD2 = document.querySelectorAll("g.d2");
 
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-const darkMode = () => {
+const darkClick = () => {
   if (bodyTag.className.includes("drK")) {
     gD2.forEach((elm) => {
       elm.style.display = "none";
@@ -43,13 +43,13 @@ const darkMode = () => {
   }
 };
 
-const darkClick = () => {
-  if (typeof window !== "undefined" && typeof window.darkMode === "function") {
-    window.darkMode();
-  } else {
-    console.error("darkMode function is not defined");
-  }
-};
+// const darkClick = () => {
+//   if (typeof window !== "undefined" && typeof window.darkMode === "function") {
+//     window.darkMode();
+//   } else {
+//     console.error("darkMode function is not defined");
+//   }
+// };
 
 const Header = () => {
   return (
