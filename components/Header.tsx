@@ -42,7 +42,7 @@ const Header = () => {
           <div className="headN section" id="header-title">
             <div className="widget Header" id="Header1">
               <Link href="/">
-                <Image height={58} src="/logo.svg" width={255} />
+                <Image height={58} src="/logo.svg" width={255} alt="Go and Learn" />
               </Link>
               <div className="headInnr hidden">
                 <h1 className="headH notranslate">
