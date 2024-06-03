@@ -98,3 +98,14 @@ export default async function PostDetailPage({
     </article>
   );
 }
+
+export async function getServerSideProps({ params }: { params: { slug: string } }) {
+  const { slug } = params;
+  const post = await getPost(slug);
+
+  return {
+    props: {
+      post,
+    },
+  };
+}
